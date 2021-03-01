@@ -2,12 +2,11 @@ on: push
 name: Slack Notification Demo
 jobs:
   slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: 8398a7/action-slack@v3
-      status: ${{ job.status }}
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL}}
+    - name: Report Status
+        if: always()
+        uses: ravsamhq/notify-slack-action@master
+      with:
+        status: ${{ job.status }}
+        notify_when: 'failure'
+  env:
+    SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK }}
