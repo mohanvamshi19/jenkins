@@ -10,6 +10,11 @@ jobs:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         
         steps:
+        - uses: act10ns/slack@v1
+          with:
+           status: starting
+           channel: '#workflows'
+          if: always()
         
         - name: Run tests
           run: ls
