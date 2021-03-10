@@ -5,22 +5,16 @@ jobs:
         
         
         runs-on: ubuntu-latest
+        env: SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         
         steps:
-        - name: Report Status
-          if: always()
-          uses: ravsamhq/notify-slack-action@master
-          with:
-            status: ${{ job.status }}
-            notify_when: 'failure'
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-            
-        - name: Report Success
-          if: always()
-          uses: ravsamhq/notify-slack-action@master
-          with:
-            status: ${{ job.status }}
-            notify_when: 'success'
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        
+        -name: Run tests
+        -run: ls
+        
+        - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#random'
+        if: always()
