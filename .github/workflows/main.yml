@@ -13,7 +13,7 @@ jobs:
         - uses: act10ns/slack@v1
           with:
            status: starting
-           channel: '#workflows'
+           channel: '#random'
           if: always()
         
         - name: Run tests
